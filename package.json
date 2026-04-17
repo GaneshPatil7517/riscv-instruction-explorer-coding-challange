@@ -1,0 +1,14 @@
+{
+  "name": "riscv-instruction-explorer",
+  "version": "1.0.0",
+  "description": "RISC-V Instruction Set Explorer — LFX Mentorship Coding Challenge",
+  "main": "src/main.mjs",
+  "type": "module",
+  "scripts": {
+    "start": "node src/main.mjs",
+    "test": "node --test test/"
+  },
+  "keywords": ["riscv", "isa", "instructions", "extensions"],
+  "author": "",
+  "license": "MIT"
+}

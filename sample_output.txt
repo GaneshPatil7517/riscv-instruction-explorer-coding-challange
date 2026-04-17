@@ -1,0 +1,634 @@
+﻿╔══════════════════════════════════════════════════════════════════════╗
+║        RISC-V Instruction Set Explorer — Coding Challenge           ║
+╚══════════════════════════════════════════════════════════════════════╝
+
+  instr_dict.json : C:\Users\HP\Music\lfx\riscv-extensions-landscape\src\instr_dict.json
+  ISA manual src/ : C:\Users\HP\Music\lfx\riscv-isa-manual\src
+
+Loading instr_dict.json …
+  Loaded 1188 instruction entries.
+
+======================================================================
+TIER 1 — Instruction Set Parsing
+======================================================================
+
+Extension Tag            | # Instructions | Example Mnemonic
+─────────────────────────────────────────────────────────────────
+rv_a                     |             11 | AMOADD.W
+rv_c                     |             23 | C.ADD
+rv_c_d                   |              4 | C.FLD
+rv_d                     |             26 | FADD.D
+rv_d_zfa                 |              8 | FCVTMOD.W.D
+rv_d_zfhmin              |              2 | FCVT.D.H
+rv_f                     |             26 | FADD.S
+rv_f_zfa                 |              7 | FLEQ.S
+rv_h                     |             13 | HFENCE.GVMA
+rv_i                     |             37 | ADD
+rv_m                     |              8 | DIV
+rv_q                     |             30 | FADD.Q
+rv_q_zfa                 |              7 | FLEQ.Q
+rv_q_zfhmin              |              2 | FCVT.H.Q
+rv_s                     |              2 | SFENCE.VMA
+rv_sdext                 |              1 | DRET
+rv_smrnmi                |              1 | MNRET
+rv_ssctr                 |              1 | SCTRCLR
+rv_svinval               |              3 | SFENCE.INVAL.IR
+rv_svinval_h             |              2 | HINVAL.GVMA
+rv_system                |              2 | MRET
+rv_u                     |              1 | URET
+rv_v                     |            627 | VAADD.VV
+rv_zabha                 |             18 | AMOADD.B
+rv_zabha_zacas           |              2 | AMOCAS.B
+rv_zacas                 |              2 | AMOCAS.D
+rv_zalasr                |              8 | LB.AQ
+rv_zawrs                 |              2 | WRS.NTO
+rv_zba                   |              3 | SH1ADD
+rv_zbb                   |             17 | ANDN
+rv_zbc                   |              3 | CLMUL
+rv_zbkb                  |              7 | ANDN
+rv_zbkc                  |              2 | CLMUL
+rv_zbkx                  |              2 | XPERM4
+rv_zbp                   |              1 | XPERM16
+rv_zbs                   |              4 | BCLR
+rv_zcb                   |             11 | C.LBU
+rv_zcmop                 |              1 | C.MOP.N
+rv_zcmp                  |              6 | CM.MVA01S
+rv_zcmt                  |              1 | CM.JALT
+rv_zfbfmin               |              2 | FCVT.BF16.S
+rv_zfh                   |             22 | FADD.H
+rv_zfh_zfa               |              7 | FLEQ.H
+rv_zfhmin                |              6 | FCVT.H.S
+rv_zibi                  |              2 | BEQI
+rv_zicbo                 |              4 | CBO.CLEAN
+rv_zicfiss               |              2 | SSAMOSWAP.D
+rv_zicond                |              2 | CZERO.EQZ
+rv_zicsr                 |              6 | CSRRC
+rv_zifencei              |              1 | FENCE.I
+rv_zimop                 |              2 | MOP.R.N
+rv_zk                    |             15 | ANDN
+rv_zkn                   |             15 | ANDN
+rv_zknh                  |              4 | SHA256SIG0
+rv_zkr                   |              1 | CSRRAND
+rv_zks                   |             15 | ANDN
+rv_zksed                 |              2 | SM4ED
+rv_zksh                  |              2 | SM3P0
+rv_zvabd                 |              5 | VABD.VV
+rv_zvbb                  |             16 | VANDN.VV
+rv_zvbc                  |              4 | VCLMUL.VV
+rv_zvfbdot32f            |              1 | VFBDOT.VV
+rv_zvfbfmin              |              2 | VFNCVTBF16.F.F.W
+rv_zvfbfwma              |              2 | VFWMACCBF16.VF
+rv_zvfofp4min            |              1 | VFEXT.VF2
+rv_zvfofp8min            |              3 | VFNCVT.F.F.Q
+rv_zvfqbdot8f            |              2 | VFQBDOT.ALT.VV
+rv_zvfqldot8f            |              2 | VFQLDOT.ALT.VV
+rv_zvfwbdot16bf          |              1 | VFWBDOT.VV
+rv_zvfwldot16bf          |              1 | VFWLDOT.VV
+rv_zvkg                  |              2 | VGHSH.VV
+rv_zvkn                  |             23 | VAESDF.VS
+rv_zvkned                |             11 | VAESDF.VS
+rv_zvknha                |              3 | VSHA2CH.VV
+rv_zvknhb                |              3 | VSHA2CH.VV
+rv_zvks                  |             14 | VANDN.VV
+rv_zvksed                |              3 | VSM4K.VI
+rv_zvksh                 |              2 | VSM3C.VI
+rv_zvqbdot8i             |              2 | VQBDOTS.VV
+rv_zvqdotq               |              7 | VQDOT.VV
+rv_zvqldot8i             |              2 | VQLDOTS.VV
+rv_zvzip                 |              5 | VPAIRE.VV
+rv32_c                   |              1 | C.JAL
+rv32_c_f                 |              4 | C.FLW
+rv32_d_zfa               |              2 | FMVH.X.D
+rv32_zk                  |             10 | AES32DSI
+rv32_zkn                 |             10 | AES32DSI
+rv32_zknd                |              2 | AES32DSI
+rv32_zkne                |              2 | AES32ESI
+rv32_zknh                |              6 | SHA512SIG0H
+rv64_a                   |             11 | AMOADD.D
+rv64_c                   |             10 | C.ADDIW
+rv64_d                   |              6 | FCVT.D.L
+rv64_f                   |              4 | FCVT.L.S
+rv64_h                   |              3 | HLV.D
+rv64_i                   |             15 | ADDIW
+rv64_m                   |              5 | DIVUW
+rv64_q                   |              4 | FCVT.L.Q
+rv64_q_zfa               |              2 | FMVH.X.Q
+rv64_zacas               |              1 | AMOCAS.Q
+rv64_zba                 |              5 | ADD.UW
+rv64_zbb                 |              9 | CLZW
+rv64_zbkb                |              5 | PACKW
+rv64_zbp                 |              5 | GORCI
+rv64_zbs                 |              4 | BCLRI
+rv64_zcb                 |              1 | C.ZEXT.W
+rv64_zfh                 |              4 | FCVT.H.L
+rv64_zk                  |             16 | AES64DS
+rv64_zkn                 |             16 | AES64DS
+rv64_zknd                |              5 | AES64DS
+rv64_zkne                |              4 | AES64ES
+rv64_zknh                |              4 | SHA512SIG0
+rv64_zkr                 |              1 | CSRRAND64
+rv64_zks                 |              5 | PACKW
+
+Total extensions: 114
+Total instruction entries: 1343 (includes duplicates across extensions)
+
+─────────────────────────────────────────────────────────────────
+Instructions belonging to more than one extension: 73
+─────────────────────────────────────────────────────────────────
+  AES32DSI             → rv32_zknd, rv32_zk, rv32_zkn
+  AES32DSMI            → rv32_zknd, rv32_zk, rv32_zkn
+  AES32ESI             → rv32_zkne, rv32_zk, rv32_zkn
+  AES32ESMI            → rv32_zkne, rv32_zk, rv32_zkn
+  AES64DS              → rv64_zknd, rv64_zkn, rv64_zk
+  AES64DSM             → rv64_zknd, rv64_zkn, rv64_zk
+  AES64ES              → rv64_zkne, rv64_zkn, rv64_zk
+  AES64ESM             → rv64_zkne, rv64_zkn, rv64_zk
+  AES64IM              → rv64_zknd, rv64_zkn, rv64_zk
+  AES64KS1I            → rv64_zknd, rv64_zkn, rv64_zkne, rv64_zk
+  AES64KS2             → rv64_zknd, rv64_zkn, rv64_zkne, rv64_zk
+  ANDN                 → rv_zbb, rv_zkn, rv_zks, rv_zk, rv_zbkb
+  CLMUL                → rv_zbc, rv_zkn, rv_zks, rv_zk, rv_zbkc
+  CLMULH               → rv_zbc, rv_zkn, rv_zks, rv_zk, rv_zbkc
+  ORN                  → rv_zbb, rv_zkn, rv_zks, rv_zk, rv_zbkb
+  PACK                 → rv_zbkb, rv_zkn, rv_zks, rv_zk
+  PACKH                → rv_zbkb, rv_zkn, rv_zks, rv_zk
+  PACKW                → rv64_zbkb, rv64_zks, rv64_zkn, rv64_zk
+  ROL                  → rv_zbb, rv_zkn, rv_zks, rv_zk, rv_zbkb
+  ROLW                 → rv64_zbb, rv64_zks, rv64_zkn, rv64_zk, rv64_zbkb
+  ROR                  → rv_zbb, rv_zkn, rv_zks, rv_zk, rv_zbkb
+  RORI                 → rv64_zbb, rv64_zks, rv64_zkn, rv64_zk, rv64_zbkb
+  RORIW                → rv64_zbb, rv64_zks, rv64_zkn, rv64_zk, rv64_zbkb
+  RORW                 → rv64_zbb, rv64_zks, rv64_zkn, rv64_zk, rv64_zbkb
+  SHA256SIG0           → rv_zknh, rv_zkn, rv_zk
+  SHA256SIG1           → rv_zknh, rv_zkn, rv_zk
+  SHA256SUM0           → rv_zknh, rv_zkn, rv_zk
+  SHA256SUM1           → rv_zknh, rv_zkn, rv_zk
+  SHA512SIG0           → rv64_zknh, rv64_zkn, rv64_zk
+  SHA512SIG0H          → rv32_zknh, rv32_zk, rv32_zkn
+  SHA512SIG0L          → rv32_zknh, rv32_zk, rv32_zkn
+  SHA512SIG1           → rv64_zknh, rv64_zkn, rv64_zk
+  SHA512SIG1H          → rv32_zknh, rv32_zk, rv32_zkn
+  SHA512SIG1L          → rv32_zknh, rv32_zk, rv32_zkn
+  SHA512SUM0           → rv64_zknh, rv64_zkn, rv64_zk
+  SHA512SUM0R          → rv32_zknh, rv32_zk, rv32_zkn
+  SHA512SUM1           → rv64_zknh, rv64_zkn, rv64_zk
+  SHA512SUM1R          → rv32_zknh, rv32_zk, rv32_zkn
+  SM3P0                → rv_zksh, rv_zks
+  SM3P1                → rv_zksh, rv_zks
+  SM4ED                → rv_zksed, rv_zks
+  SM4KS                → rv_zksed, rv_zks
+  VAESDF.VS            → rv_zvkned, rv_zvkn
+  VAESDF.VV            → rv_zvkned, rv_zvkn
+  VAESDM.VS            → rv_zvkned, rv_zvkn
+  VAESDM.VV            → rv_zvkned, rv_zvkn
+  VAESEF.VS            → rv_zvkned, rv_zvkn
+  VAESEF.VV            → rv_zvkned, rv_zvkn
+  VAESEM.VS            → rv_zvkned, rv_zvkn
+  VAESEM.VV            → rv_zvkned, rv_zvkn
+  VAESKF1.VI           → rv_zvkned, rv_zvkn
+  VAESKF2.VI           → rv_zvkned, rv_zvkn
+  VAESZ.VS             → rv_zvkned, rv_zvkn
+  VANDN.VV             → rv_zvbb, rv_zvks, rv_zvkn
+  VANDN.VX             → rv_zvbb, rv_zvks, rv_zvkn
+  VBREV8.V             → rv_zvbb, rv_zvks, rv_zvkn
+  VREV8.V              → rv_zvbb, rv_zvks, rv_zvkn
+  VROL.VV              → rv_zvbb, rv_zvks, rv_zvkn
+  VROL.VX              → rv_zvbb, rv_zvks, rv_zvkn
+  VROR.VI              → rv_zvbb, rv_zvks, rv_zvkn
+  VROR.VV              → rv_zvbb, rv_zvks, rv_zvkn
+  VROR.VX              → rv_zvbb, rv_zvks, rv_zvkn
+  VSHA2CH.VV           → rv_zvknha, rv_zvknhb, rv_zvkn
+  VSHA2CL.VV           → rv_zvknha, rv_zvknhb, rv_zvkn
+  VSHA2MS.VV           → rv_zvknha, rv_zvknhb, rv_zvkn
+  VSM3C.VI             → rv_zvksh, rv_zvks
+  VSM3ME.VV            → rv_zvksh, rv_zvks
+  VSM4K.VI             → rv_zvksed, rv_zvks
+  VSM4R.VS             → rv_zvksed, rv_zvks
+  VSM4R.VV             → rv_zvksed, rv_zvks
+  XNOR                 → rv_zbb, rv_zkn, rv_zks, rv_zk, rv_zbkb
+  XPERM4               → rv_zbkx, rv_zkn, rv_zks, rv_zk
+  XPERM8               → rv_zbkx, rv_zkn, rv_zks, rv_zk
+
+Scanning ISA manual AsciiDoc files …
+  Found 208 extension references in the manual.
+
+======================================================================
+TIER 2 — Cross-Reference with the ISA Manual
+======================================================================
+
+Summary: 56 matched, 29 in JSON only, 152 in manual only
+
+─────────────────────────────────────────────────────────────────
+Matched extensions (in both instr_dict.json and ISA manual): 56
+─────────────────────────────────────────────────────────────────
+  ✓ rv32_zknd
+  ✓ rv32_zkne
+  ✓ rv_a
+  ✓ rv_c
+  ✓ rv_d
+  ✓ rv_f
+  ✓ rv_h
+  ✓ rv_i
+  ✓ rv_m
+  ✓ rv_q
+  ✓ rv_smrnmi
+  ✓ rv_ssctr
+  ✓ rv_svinval
+  ✓ rv_v
+  ✓ rv_zabha
+  ✓ rv_zacas
+  ✓ rv_zalasr
+  ✓ rv_zawrs
+  ✓ rv_zba
+  ✓ rv_zbb
+  ✓ rv_zbc
+  ✓ rv_zbkb
+  ✓ rv_zbkc
+  ✓ rv_zbkx
+  ✓ rv_zbs
+  ✓ rv_zcb
+  ✓ rv_zcmop
+  ✓ rv_zcmp
+  ✓ rv_zcmt
+  ✓ rv_zfbfmin
+  ✓ rv_zfh
+  ✓ rv_zfhmin
+  ✓ rv_zicfiss
+  ✓ rv_zicond
+  ✓ rv_zicsr
+  ✓ rv_zifencei
+  ✓ rv_zimop
+  ✓ rv_zk
+  ✓ rv_zkn
+  ✓ rv_zknh
+  ✓ rv_zkr
+  ✓ rv_zks
+  ✓ rv_zksed
+  ✓ rv_zksh
+  ✓ rv_zvbb
+  ✓ rv_zvbc
+  ✓ rv_zvfbfmin
+  ✓ rv_zvfbfwma
+  ✓ rv_zvkg
+  ✓ rv_zvkn
+  ✓ rv_zvkned
+  ✓ rv_zvknha
+  ✓ rv_zvknhb
+  ✓ rv_zvks
+  ✓ rv_zvksed
+  ✓ rv_zvksh
+
+─────────────────────────────────────────────────────────────────
+Extensions in instr_dict.json but NOT in the ISA manual: 29
+─────────────────────────────────────────────────────────────────
+  ✗ rv32_c_f
+  ✗ rv_c_d
+  ✗ rv_d_zfa
+  ✗ rv_d_zfhmin
+  ✗ rv_f_zfa
+  ✗ rv_q_zfa
+  ✗ rv_q_zfhmin
+  ✗ rv_s
+  ✗ rv_sdext
+  ✗ rv_svinval_h
+  ✗ rv_system
+  ✗ rv_u
+  ✗ rv_zabha_zacas
+  ✗ rv_zbp
+  ✗ rv_zfh_zfa
+  ✗ rv_zibi
+  ✗ rv_zicbo
+  ✗ rv_zvabd
+  ✗ rv_zvfbdot32f
+  ✗ rv_zvfofp4min
+  ✗ rv_zvfofp8min
+  ✗ rv_zvfqbdot8f
+  ✗ rv_zvfqldot8f
+  ✗ rv_zvfwbdot16bf
+  ✗ rv_zvfwldot16bf
+  ✗ rv_zvqbdot8i
+  ✗ rv_zvqdotq
+  ✗ rv_zvqldot8i
+  ✗ rv_zvzip
+
+─────────────────────────────────────────────────────────────────
+Extensions in the ISA manual but NOT in instr_dict.json: 152
+─────────────────────────────────────────────────────────────────
+  ◦ b
+  ◦ e
+  ◦ g
+  ◦ n
+  ◦ p
+  ◦ sh
+  ◦ sha
+  ◦ shcounterenw
+  ◦ shgatpa
+  ◦ shlcofideleg
+  ◦ shmno
+  ◦ shtvala
+  ◦ shvsatpa
+  ◦ shvstvala
+  ◦ shvstvecd
+  ◦ sm
+  ◦ smaia
+  ◦ smcdeleg
+  ◦ smcntrpmf
+  ◦ smcsrind
+  ◦ smctr
+  ◦ smdbltrp
+  ◦ smepmp
+  ◦ smmpm
+  ◦ smnpm
+  ◦ smpqr
+  ◦ smstateen
+  ◦ ss
+  ◦ ssaia
+  ◦ ssccfg
+  ◦ ssccptr
+  ◦ sscofpmf
+  ◦ sscounterenw
+  ◦ sscsrind
+  ◦ ssdbltrap
+  ◦ ssdbltrp
+  ◦ ssghi
+  ◦ ssnpm
+  ◦ sspm
+  ◦ ssptead
+  ◦ ssqosid
+  ◦ ssstateen
+  ◦ ssstrict
+  ◦ sstc
+  ◦ sstvala
+  ◦ sstvecd
+  ◦ ssu64xl
+  ◦ su
+  ◦ sudef
+  ◦ sv
+  ◦ sv32
+  ◦ sv39
+  ◦ sv48
+  ◦ sv59
+  ◦ svade
+  ◦ svadu
+  ◦ svbare
+  ◦ svjkl
+  ◦ svnapot
+  ◦ svpbmt
+  ◦ svrsw60t59b
+  ◦ svvptc
+  ◦ x
+  ◦ xhwacha
+  ◦ xstu
+  ◦ z
+  ◦ za
+  ◦ za128rs
+  ◦ za64rs
+  ◦ zaamo
+  ◦ zabc
+  ◦ zabrocki
+  ◦ zalrsc
+  ◦ zam
+  ◦ zama
+  ◦ zama16b
+  ◦ zandijk
+  ◦ zars
+  ◦ zb
+  ◦ zbk
+  ◦ zc
+  ◦ zca
+  ◦ zcd
+  ◦ zce
+  ◦ zcf
+  ◦ zclsd
+  ◦ zd
+  ◦ zdinx
+  ◦ zero
+  ◦ zeroed
+  ◦ zeroes
+  ◦ zeroing
+  ◦ zeroization
+  ◦ zeroized
+  ◦ zeroness
+  ◦ zeros
+  ◦ zeroth
+  ◦ zext
+  ◦ zf
+  ◦ zfa
+  ◦ zfinx
+  ◦ zhang
+  ◦ zhinx
+  ◦ zhinxmin
+  ◦ zi
+  ◦ zic64b
+  ◦ zicbom
+  ◦ zicbop
+  ◦ zicboz
+  ◦ ziccamoa
+  ◦ ziccamoc
+  ◦ ziccif
+  ◦ zicclsm
+  ◦ ziccrse
+  ◦ zicfilp
+  ◦ zicntr
+  ◦ zihintntl
+  ◦ zihintpause
+  ◦ zihpm
+  ◦ zilsd
+  ◦ zip
+  ◦ zjid
+  ◦ zkt
+  ◦ zm
+  ◦ zmmul
+  ◦ zp
+  ◦ zpm
+  ◦ ztso
+  ◦ zve
+  ◦ zve32
+  ◦ zve32f
+  ◦ zve32x
+  ◦ zve64
+  ◦ zve64d
+  ◦ zve64f
+  ◦ zve64x
+  ◦ zvfh
+  ◦ zvfhmin
+  ◦ zvkb
+  ◦ zvknc
+  ◦ zvkng
+  ◦ zvknh
+  ◦ zvksc
+  ◦ zvksg
+  ◦ zvkt
+  ◦ zvl
+  ◦ zvl1024b
+  ◦ zvl128b
+  ◦ zvl256b
+  ◦ zvl32b
+  ◦ zvl512b
+  ◦ zvl64b
+
+======================================================================
+TIER 3 (Bonus) — Extension Sharing Graph
+======================================================================
+
+Adjacency List (extensions sharing at least one instruction):
+─────────────────────────────────────────────────────────────────
+  rv32_zk ↔ rv32_zkn, rv32_zknd, rv32_zkne, rv32_zknh
+  rv32_zkn ↔ rv32_zk, rv32_zknd, rv32_zkne, rv32_zknh
+  rv32_zknd ↔ rv32_zk, rv32_zkn
+  rv32_zkne ↔ rv32_zk, rv32_zkn
+  rv32_zknh ↔ rv32_zk, rv32_zkn
+  rv64_zbb ↔ rv64_zbkb, rv64_zk, rv64_zkn, rv64_zks
+  rv64_zbkb ↔ rv64_zbb, rv64_zk, rv64_zkn, rv64_zks
+  rv64_zk ↔ rv64_zbb, rv64_zbkb, rv64_zkn, rv64_zknd, rv64_zkne, rv64_zknh, rv64_zks
+  rv64_zkn ↔ rv64_zbb, rv64_zbkb, rv64_zk, rv64_zknd, rv64_zkne, rv64_zknh, rv64_zks
+  rv64_zknd ↔ rv64_zk, rv64_zkn, rv64_zkne
+  rv64_zkne ↔ rv64_zk, rv64_zkn, rv64_zknd
+  rv64_zknh ↔ rv64_zk, rv64_zkn
+  rv64_zks ↔ rv64_zbb, rv64_zbkb, rv64_zk, rv64_zkn
+  rv_zbb ↔ rv_zbkb, rv_zk, rv_zkn, rv_zks
+  rv_zbc ↔ rv_zbkc, rv_zk, rv_zkn, rv_zks
+  rv_zbkb ↔ rv_zbb, rv_zk, rv_zkn, rv_zks
+  rv_zbkc ↔ rv_zbc, rv_zk, rv_zkn, rv_zks
+  rv_zbkx ↔ rv_zk, rv_zkn, rv_zks
+  rv_zk ↔ rv_zbb, rv_zbc, rv_zbkb, rv_zbkc, rv_zbkx, rv_zkn, rv_zknh, rv_zks
+  rv_zkn ↔ rv_zbb, rv_zbc, rv_zbkb, rv_zbkc, rv_zbkx, rv_zk, rv_zknh, rv_zks
+  rv_zknh ↔ rv_zk, rv_zkn
+  rv_zks ↔ rv_zbb, rv_zbc, rv_zbkb, rv_zbkc, rv_zbkx, rv_zk, rv_zkn, rv_zksed, rv_zksh
+  rv_zksed ↔ rv_zks
+  rv_zksh ↔ rv_zks
+  rv_zvbb ↔ rv_zvkn, rv_zvks
+  rv_zvkn ↔ rv_zvbb, rv_zvkned, rv_zvknha, rv_zvknhb, rv_zvks
+  rv_zvkned ↔ rv_zvkn
+  rv_zvknha ↔ rv_zvkn, rv_zvknhb
+  rv_zvknhb ↔ rv_zvkn, rv_zvknha
+  rv_zvks ↔ rv_zvbb, rv_zvkn, rv_zvksed, rv_zvksh
+  rv_zvksed ↔ rv_zvks
+  rv_zvksh ↔ rv_zvks
+
+Shared instructions per edge:
+─────────────────────────────────────────────────────────────────
+  rv32_zkn↔rv32_zknd: AES32DSI, AES32DSMI (2 shared)
+  rv32_zkn↔rv32_zkne: AES32ESI, AES32ESMI (2 shared)
+  rv32_zkn↔rv32_zknh: SHA512SIG0H, SHA512SIG0L, SHA512SIG1H, SHA512SIG1L, SHA512SUM0R, SHA512SUM1R (6 shared)
+  rv32_zk↔rv32_zkn: AES32DSI, AES32DSMI, AES32ESI, AES32ESMI, SHA512SIG0H, SHA512SIG0L, SHA512SIG1H, SHA512SIG1L, SHA512SUM0R, SHA512SUM1R (10 shared)
+  rv32_zk↔rv32_zknd: AES32DSI, AES32DSMI (2 shared)
+  rv32_zk↔rv32_zkne: AES32ESI, AES32ESMI (2 shared)
+  rv32_zk↔rv32_zknh: SHA512SIG0H, SHA512SIG0L, SHA512SIG1H, SHA512SIG1L, SHA512SUM0R, SHA512SUM1R (6 shared)
+  rv64_zbb↔rv64_zbkb: ROLW, RORI, RORIW, RORW (4 shared)
+  rv64_zbb↔rv64_zk: ROLW, RORI, RORIW, RORW (4 shared)
+  rv64_zbb↔rv64_zkn: ROLW, RORI, RORIW, RORW (4 shared)
+  rv64_zbb↔rv64_zks: ROLW, RORI, RORIW, RORW (4 shared)
+  rv64_zbkb↔rv64_zk: PACKW, ROLW, RORI, RORIW, RORW (5 shared)
+  rv64_zbkb↔rv64_zkn: PACKW, ROLW, RORI, RORIW, RORW (5 shared)
+  rv64_zbkb↔rv64_zks: PACKW, ROLW, RORI, RORIW, RORW (5 shared)
+  rv64_zknd↔rv64_zkne: AES64KS1I, AES64KS2 (2 shared)
+  rv64_zkn↔rv64_zknd: AES64DS, AES64DSM, AES64IM, AES64KS1I, AES64KS2 (5 shared)
+  rv64_zkn↔rv64_zkne: AES64ES, AES64ESM, AES64KS1I, AES64KS2 (4 shared)
+  rv64_zkn↔rv64_zknh: SHA512SIG0, SHA512SIG1, SHA512SUM0, SHA512SUM1 (4 shared)
+  rv64_zkn↔rv64_zks: PACKW, ROLW, RORI, RORIW, RORW (5 shared)
+  rv64_zk↔rv64_zkn: AES64DS, AES64DSM, AES64ES, AES64ESM, AES64IM, AES64KS1I, AES64KS2, PACKW, ROLW, RORI, RORIW, RORW, SHA512SIG0, SHA512SIG1, SHA512SUM0, SHA512SUM1 (16 shared)
+  rv64_zk↔rv64_zknd: AES64DS, AES64DSM, AES64IM, AES64KS1I, AES64KS2 (5 shared)
+  rv64_zk↔rv64_zkne: AES64ES, AES64ESM, AES64KS1I, AES64KS2 (4 shared)
+  rv64_zk↔rv64_zknh: SHA512SIG0, SHA512SIG1, SHA512SUM0, SHA512SUM1 (4 shared)
+  rv64_zk↔rv64_zks: PACKW, ROLW, RORI, RORIW, RORW (5 shared)
+  rv_zbb↔rv_zbkb: ANDN, ORN, ROL, ROR, XNOR (5 shared)
+  rv_zbb↔rv_zk: ANDN, ORN, ROL, ROR, XNOR (5 shared)
+  rv_zbb↔rv_zkn: ANDN, ORN, ROL, ROR, XNOR (5 shared)
+  rv_zbb↔rv_zks: ANDN, ORN, ROL, ROR, XNOR (5 shared)
+  rv_zbc↔rv_zbkc: CLMUL, CLMULH (2 shared)
+  rv_zbc↔rv_zk: CLMUL, CLMULH (2 shared)
+  rv_zbc↔rv_zkn: CLMUL, CLMULH (2 shared)
+  rv_zbc↔rv_zks: CLMUL, CLMULH (2 shared)
+  rv_zbkb↔rv_zk: ANDN, ORN, PACK, PACKH, ROL, ROR, XNOR (7 shared)
+  rv_zbkb↔rv_zkn: ANDN, ORN, PACK, PACKH, ROL, ROR, XNOR (7 shared)
+  rv_zbkb↔rv_zks: ANDN, ORN, PACK, PACKH, ROL, ROR, XNOR (7 shared)
+  rv_zbkc↔rv_zk: CLMUL, CLMULH (2 shared)
+  rv_zbkc↔rv_zkn: CLMUL, CLMULH (2 shared)
+  rv_zbkc↔rv_zks: CLMUL, CLMULH (2 shared)
+  rv_zbkx↔rv_zk: XPERM4, XPERM8 (2 shared)
+  rv_zbkx↔rv_zkn: XPERM4, XPERM8 (2 shared)
+  rv_zbkx↔rv_zks: XPERM4, XPERM8 (2 shared)
+  rv_zkn↔rv_zknh: SHA256SIG0, SHA256SIG1, SHA256SUM0, SHA256SUM1 (4 shared)
+  rv_zkn↔rv_zks: ANDN, CLMUL, CLMULH, ORN, PACK, PACKH, ROL, ROR, XNOR, XPERM4, XPERM8 (11 shared)
+  rv_zks↔rv_zksed: SM4ED, SM4KS (2 shared)
+  rv_zks↔rv_zksh: SM3P0, SM3P1 (2 shared)
+  rv_zk↔rv_zkn: ANDN, CLMUL, CLMULH, ORN, PACK, PACKH, ROL, ROR, SHA256SIG0, SHA256SIG1, SHA256SUM0, SHA256SUM1, XNOR, XPERM4, XPERM8 (15 shared)
+  rv_zk↔rv_zknh: SHA256SIG0, SHA256SIG1, SHA256SUM0, SHA256SUM1 (4 shared)
+  rv_zk↔rv_zks: ANDN, CLMUL, CLMULH, ORN, PACK, PACKH, ROL, ROR, XNOR, XPERM4, XPERM8 (11 shared)
+  rv_zvbb↔rv_zvkn: VANDN.VV, VANDN.VX, VBREV8.V, VREV8.V, VROL.VV, VROL.VX, VROR.VI, VROR.VV, VROR.VX (9 shared)
+  rv_zvbb↔rv_zvks: VANDN.VV, VANDN.VX, VBREV8.V, VREV8.V, VROL.VV, VROL.VX, VROR.VI, VROR.VV, VROR.VX (9 shared)
+  rv_zvknha↔rv_zvknhb: VSHA2CH.VV, VSHA2CL.VV, VSHA2MS.VV (3 shared)
+  rv_zvkn↔rv_zvkned: VAESDF.VS, VAESDF.VV, VAESDM.VS, VAESDM.VV, VAESEF.VS, VAESEF.VV, VAESEM.VS, VAESEM.VV, VAESKF1.VI, VAESKF2.VI, VAESZ.VS (11 shared)
+  rv_zvkn↔rv_zvknha: VSHA2CH.VV, VSHA2CL.VV, VSHA2MS.VV (3 shared)
+  rv_zvkn↔rv_zvknhb: VSHA2CH.VV, VSHA2CL.VV, VSHA2MS.VV (3 shared)
+  rv_zvkn↔rv_zvks: VANDN.VV, VANDN.VX, VBREV8.V, VREV8.V, VROL.VV, VROL.VX, VROR.VI, VROR.VV, VROR.VX (9 shared)
+  rv_zvks↔rv_zvksed: VSM4K.VI, VSM4R.VS, VSM4R.VV (3 shared)
+  rv_zvks↔rv_zvksh: VSM3C.VI, VSM3ME.VV (2 shared)
+
+DOT format (paste into https://dreampuf.github.io/GraphvizOnline):
+─────────────────────────────────────────────────────────────────
+graph ExtensionSharing {
+  rankdir=LR;
+  node [shape=box, style=filled, fillcolor="#e8f4f8"];
+
+  "rv32_zk" -- "rv32_zkn" [label="10"];
+  "rv32_zk" -- "rv32_zknd" [label="2"];
+  "rv32_zk" -- "rv32_zkne" [label="2"];
+  "rv32_zk" -- "rv32_zknh" [label="6"];
+  "rv32_zkn" -- "rv32_zknd" [label="2"];
+  "rv32_zkn" -- "rv32_zkne" [label="2"];
+  "rv32_zkn" -- "rv32_zknh" [label="6"];
+  "rv64_zbb" -- "rv64_zbkb" [label="4"];
+  "rv64_zbb" -- "rv64_zk" [label="4"];
+  "rv64_zbb" -- "rv64_zkn" [label="4"];
+  "rv64_zbb" -- "rv64_zks" [label="4"];
+  "rv64_zbkb" -- "rv64_zk" [label="5"];
+  "rv64_zbkb" -- "rv64_zkn" [label="5"];
+  "rv64_zbkb" -- "rv64_zks" [label="5"];
+  "rv64_zk" -- "rv64_zkn" [label="16"];
+  "rv64_zk" -- "rv64_zknd" [label="5"];
+  "rv64_zk" -- "rv64_zkne" [label="4"];
+  "rv64_zk" -- "rv64_zknh" [label="4"];
+  "rv64_zk" -- "rv64_zks" [label="5"];
+  "rv64_zkn" -- "rv64_zknd" [label="5"];
+  "rv64_zkn" -- "rv64_zkne" [label="4"];
+  "rv64_zkn" -- "rv64_zknh" [label="4"];
+  "rv64_zkn" -- "rv64_zks" [label="5"];
+  "rv64_zknd" -- "rv64_zkne" [label="2"];
+  "rv_zbb" -- "rv_zbkb" [label="5"];
+  "rv_zbb" -- "rv_zk" [label="5"];
+  "rv_zbb" -- "rv_zkn" [label="5"];
+  "rv_zbb" -- "rv_zks" [label="5"];
+  "rv_zbc" -- "rv_zbkc" [label="2"];
+  "rv_zbc" -- "rv_zk" [label="2"];
+  "rv_zbc" -- "rv_zkn" [label="2"];
+  "rv_zbc" -- "rv_zks" [label="2"];
+  "rv_zbkb" -- "rv_zk" [label="7"];
+  "rv_zbkb" -- "rv_zkn" [label="7"];
+  "rv_zbkb" -- "rv_zks" [label="7"];
+  "rv_zbkc" -- "rv_zk" [label="2"];
+  "rv_zbkc" -- "rv_zkn" [label="2"];
+  "rv_zbkc" -- "rv_zks" [label="2"];
+  "rv_zbkx" -- "rv_zk" [label="2"];
+  "rv_zbkx" -- "rv_zkn" [label="2"];
+  "rv_zbkx" -- "rv_zks" [label="2"];
+  "rv_zk" -- "rv_zkn" [label="15"];
+  "rv_zk" -- "rv_zknh" [label="4"];
+  "rv_zk" -- "rv_zks" [label="11"];
+  "rv_zkn" -- "rv_zknh" [label="4"];
+  "rv_zkn" -- "rv_zks" [label="11"];
+  "rv_zks" -- "rv_zksed" [label="2"];
+  "rv_zks" -- "rv_zksh" [label="2"];
+  "rv_zvbb" -- "rv_zvkn" [label="9"];
+  "rv_zvbb" -- "rv_zvks" [label="9"];
+  "rv_zvkn" -- "rv_zvkned" [label="11"];
+  "rv_zvkn" -- "rv_zvknha" [label="3"];
+  "rv_zvkn" -- "rv_zvknhb" [label="3"];
+  "rv_zvkn" -- "rv_zvks" [label="9"];
+  "rv_zvknha" -- "rv_zvknhb" [label="3"];
+  "rv_zvks" -- "rv_zvksed" [label="3"];
+  "rv_zvks" -- "rv_zvksh" [label="2"];
+}
+
+Done.
