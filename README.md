@@ -1,6 +1,6 @@
 # RISC-V Instruction Set Explorer
 
-> LFX Mentorship Coding Challenge — **Mapping the RISC-V Extensions Landscape**
+> LFX Mentorship Coding Challenge  **Mapping the RISC-V Extensions Landscape**
 
 A JavaScript (Node.js) program that parses the RISC-V instruction dictionary,
 cross-references it against the official ISA manual, and generates a visual
@@ -66,7 +66,7 @@ riscv-instruction-explorer/
 
 ---
 
-## Tier 1 — Instruction Set Parsing
+## Tier 1  Instruction Set Parsing
 
 **What it does:**
 1. Reads `instr_dict.json` (1,188 instruction entries)
@@ -105,7 +105,7 @@ Instructions belonging to more than one extension: 73
 
 ---
 
-## Tier 2 — Cross-Reference with the ISA Manual
+## Tier 2  Cross-Reference with the ISA Manual
 
 **What it does:**
 1. Clones/reads the [official RISC-V ISA manual](https://github.com/riscv/riscv-isa-manual)
