@@ -1,5 +1,5 @@
 ﻿╔══════════════════════════════════════════════════════════════════════╗
-║        RISC-V Instruction Set Explorer — Coding Challenge           ║
+║        RISC-V Instruction Set Explorer — Coding Challenge                                 ║
 ╚══════════════════════════════════════════════════════════════════════╝
 
   instr_dict.json : C:\Users\HP\Music\lfx\riscv-extensions-landscape\src\instr_dict.json

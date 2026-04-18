@@ -1,18 +1,7 @@
-/**
- * Tier 3 (Bonus) — Extension Sharing Graph
- *
- * Generates a text-based graph showing which extensions share instructions.
- * Two extensions are connected if at least one instruction belongs to both.
- */
+// Tier 3 (bonus) — build a graph of extensions that share instructions
+// two extensions get an edge if at least one instruction belongs to both
 
-/**
- * Build an adjacency list of extensions that share at least one instruction.
- *
- * @param {Record<string, object>} instrDict – parsed instr_dict.json
- * @returns {{ adjacency: Map<string, Set<string>>, sharedInstructions: Map<string, string[]> }}
- *   adjacency: ext → Set of connected extensions
- *   sharedInstructions: "extA↔extB" → [mnemonic, …]
- */
+// Returns adjacency list + a map of shared instructions per edge
 export function buildSharingGraph(instrDict) {
   const adjacency = new Map();
   const sharedInstructions = new Map();
@@ -23,7 +12,7 @@ export function buildSharingGraph(instrDict) {
 
     const mnemonic = key.replace(/_/g, '.').toUpperCase();
 
-    // For each pair of extensions this instruction belongs to, add an edge
+    // for each pair of extensions, create an edge
     for (let i = 0; i < extensions.length; i++) {
       for (let j = i + 1; j < extensions.length; j++) {
         const a = extensions[i];
@@ -44,9 +33,7 @@ export function buildSharingGraph(instrDict) {
   return { adjacency, sharedInstructions };
 }
 
-/**
- * Print the sharing graph as a text-based adjacency list with DOT format.
- */
+// Print the graph as text + DOT format for graphviz
 export function printSharingGraph(adjacency, sharedInstructions) {
   console.log('='.repeat(70));
   console.log('TIER 3 (Bonus) — Extension Sharing Graph');
@@ -59,7 +46,7 @@ export function printSharingGraph(adjacency, sharedInstructions) {
     return;
   }
 
-  // ── Text adjacency list ──
+  // text adjacency list
   console.log('Adjacency List (extensions sharing at least one instruction):');
   console.log('─'.repeat(65));
 
@@ -70,7 +57,7 @@ export function printSharingGraph(adjacency, sharedInstructions) {
   }
   console.log('');
 
-  // ── Shared instructions per edge ──
+  // show which instructions are shared on each edge
   console.log('Shared instructions per edge:');
   console.log('─'.repeat(65));
 
@@ -81,7 +68,7 @@ export function printSharingGraph(adjacency, sharedInstructions) {
   }
   console.log('');
 
-  // ── DOT graph format (can be visualized with Graphviz) ──
+  // DOT output for graphviz
   console.log('DOT format (paste into https://dreampuf.github.io/GraphvizOnline):');
   console.log('─'.repeat(65));
   console.log('graph ExtensionSharing {');

@@ -1,6 +1,4 @@
-/**
- * Unit tests for Tier 3 — Extension Sharing Graph
- */
+// tests for tier 3 sharing graph
 
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';

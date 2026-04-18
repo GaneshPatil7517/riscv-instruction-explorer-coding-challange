@@ -1,17 +1,7 @@
 #!/usr/bin/env node
 
-/**
- * RISC-V Instruction Set Explorer
- * ================================
- * LFX Mentorship Coding Challenge — "Mapping the RISC-V Extensions Landscape"
- *
- * Usage:
- *   node src/main.mjs [--instr-dict <path>] [--manual-src <path>]
- *
- * Defaults:
- *   --instr-dict  ../riscv-extensions-landscape/src/instr_dict.json
- *   --manual-src  ../riscv-isa-manual/src/
- */
+// entry point - runs all 3 tiers of the coding challenge
+// usage: node src/main.mjs [--instr-dict <path>] [--manual-src <path>]
 
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -22,7 +12,6 @@ import { buildSharingGraph, printSharingGraph } from './tier3_graph.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-// ── Parse CLI arguments ──
 function parseArgs() {
   const args = process.argv.slice(2);
   const opts = {
@@ -54,9 +43,7 @@ async function main() {
   console.log(`  ISA manual src/ : ${opts.manualSrc}`);
   console.log('');
 
-  // ══════════════════════════════════════════════════════════════════════
-  // TIER 1 — Instruction Set Parsing
-  // ══════════════════════════════════════════════════════════════════════
+  // ---------- TIER 1 ----------
   console.log('Loading instr_dict.json …');
   const instrDict = await loadInstrDict(opts.instrDict);
   const totalInstructions = Object.keys(instrDict).length;
@@ -66,9 +53,7 @@ async function main() {
   const { byExtension, multiExt } = groupByExtension(instrDict);
   printTier1Report(byExtension, multiExt);
 
-  // ══════════════════════════════════════════════════════════════════════
-  // TIER 2 — Cross-Reference with the ISA Manual
-  // ══════════════════════════════════════════════════════════════════════
+  // ---------- TIER 2 ----------
   console.log('Scanning ISA manual AsciiDoc files …');
   const jsonExtNames = [...byExtension.keys()];
   const normMap = buildNormalizationMap(jsonExtNames);
@@ -79,9 +64,7 @@ async function main() {
   const xrefResult = crossReference(normMap, manualExts);
   printTier2Report(xrefResult);
 
-  // ══════════════════════════════════════════════════════════════════════
-  // TIER 3 (Bonus) — Extension Sharing Graph
-  // ══════════════════════════════════════════════════════════════════════
+  // ---------- TIER 3 ----------
   const { adjacency, sharedInstructions } = buildSharingGraph(instrDict);
   printSharingGraph(adjacency, sharedInstructions);
 

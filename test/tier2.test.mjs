@@ -1,6 +1,4 @@
-/**
- * Unit tests for Tier 2 — Cross-Reference Logic
- */
+// tests for tier 2 normalization and cross-reference
 
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';

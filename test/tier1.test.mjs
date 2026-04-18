@@ -1,6 +1,4 @@
-/**
- * Unit tests for Tier 1 — Instruction Set Parsing
- */
+// tests for tier 1 parsing logic
 
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
