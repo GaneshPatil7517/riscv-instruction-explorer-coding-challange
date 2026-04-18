@@ -6,24 +6,21 @@ A JavaScript (Node.js) program that parses the RISC-V instruction dictionary,
 cross-references it against the official ISA manual, and generates a visual
 extension-sharing graph.
 
-## Prerequisites
-
+**Prerequisites**
 - **Node.js** ≥ 18 (uses `node:test`, ES modules, `matchAll`)
 - **Git** (to clone the ISA manual)
 - No external npm dependencies — uses only Node.js built-in modules
 
-## Setup
-
+**Setup**
 ```bash
 # 1. Clone the required repositories (if not already present)
 git clone https://github.com/rpsene/riscv-extensions-landscape.git
 git clone https://github.com/riscv/riscv-isa-manual.git
 
-# 2. No install needed — zero dependencies
+# 2. No install needed - zero dependencies
 ```
 
-## Usage
-
+**Usage**
 ```bash
 # Run from the project root
 node src/main.mjs
@@ -38,16 +35,14 @@ node src/main.mjs \
 - `--instr-dict` → `../riscv-extensions-landscape/src/instr_dict.json`
 - `--manual-src` → `../riscv-isa-manual/src/`
 
-## Running Tests
-
+**Running Tests**
 ```bash
 node --test test/tier1.test.mjs test/tier2.test.mjs test/tier3.test.mjs
 ```
 
 25 unit tests covering all three tiers.
 
-## Project Structure
-
+**Project Structure**
 ```
 riscv-instruction-explorer/
 ├── src/
@@ -66,8 +61,7 @@ riscv-instruction-explorer/
 
 ---
 
-## Tier 1  Instruction Set Parsing
-
+**Tier 1  Instruction Set Parsing**
 **What it does:**
 1. Reads `instr_dict.json` (1,188 instruction entries)
 2. Groups every instruction by its extension tag(s) (114 extensions found)
@@ -80,8 +74,7 @@ riscv-instruction-explorer/
 - Extensions are sorted alphabetically for deterministic output
 - Multi-extension detection is O(n) — single pass over the dictionary
 
-### Sample Output (Tier 1)
-
+**Sample Output (Tier 1)**
 ```
 Extension Tag            | # Instructions | Example Mnemonic
 ─────────────────────────────────────────────────────────────────
@@ -105,8 +98,7 @@ Instructions belonging to more than one extension: 73
 
 ---
 
-## Tier 2  Cross-Reference with the ISA Manual
-
+**Tier 2  Cross-Reference with the ISA Manual**
 **What it does:**
 1. Clones/reads the [official RISC-V ISA manual](https://github.com/riscv/riscv-isa-manual)
 2. Scans all AsciiDoc files under `src/` for extension name references
@@ -128,8 +120,7 @@ Instructions belonging to more than one extension: 73
 - Single-letter extensions (I, M, A, F, D, Q, C, V) are only matched in
   explicit context ("the M extension", "RV64M") to avoid false positives
 
-### Sample Output (Tier 2)
-
+**Sample Output (Tier 2)**
 ```
 Summary: 56 matched, 29 in JSON only, 152 in manual only
 
@@ -160,8 +151,7 @@ instruction encodings.
 
 ---
 
-## Tier 3 (Bonus) — Extension Sharing Graph
-
+**Tier 3 (Bonus) Extension Sharing Graph**
 **What it does:**
 1. Builds an adjacency graph: two extensions are connected if they share at
    least one instruction
@@ -174,8 +164,7 @@ instruction encodings.
 (Zbkb, Zbkc, Zbkx, Zknh, Zksed, Zksh). This creates dense clusters in the
 sharing graph.
 
-### Sample Output (Tier 3)
-
+**Sample Output (Tier 3)**
 ```
 Adjacency List (extensions sharing at least one instruction):
   rv_zbb ↔ rv_zbkb, rv_zk, rv_zkn, rv_zks
@@ -198,8 +187,7 @@ DOT format (paste into https://dreampuf.github.io/GraphvizOnline):
 
 ---
 
-## Design Decisions
-
+**Design Decisions**
 | Decision | Rationale |
 |----------|-----------|
 | **Zero dependencies** | Keeps the project lightweight and avoids supply-chain concerns. Node.js built-in `node:test`, `node:fs`, `node:path` are sufficient. |
@@ -210,8 +198,7 @@ DOT format (paste into https://dreampuf.github.io/GraphvizOnline):
 | **Normalization-based cross-reference** | `instr_dict.json` uses `rv_`/`rv64_` prefixes; the manual uses bare names. Stripping the prefix and lowercasing both sides enables reliable matching despite naming differences. |
 | **DOT graph output** | Graphviz DOT is a widely-supported, human-readable format. Users can paste directly into online renderers. |
 
-## Assumptions
-
+**Assumptions**
 1. `instr_dict.json` is the authoritative source for instruction encodings
 2. The ISA manual's `src/` directory contains the latest AsciiDoc sources
 3. Extension names in `instr_dict.json` always follow the `rv[32|64|128]_<name>` pattern
