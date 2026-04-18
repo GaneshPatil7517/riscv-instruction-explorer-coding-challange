@@ -55,7 +55,7 @@ One annoying issue I ran into was that S-prefix patterns were matching regular E
 
 Results: 56 extensions match between both sources, 29 are only in the JSON (mostly compound names like `rv_d_zfa`), and 152 are only in the manual. The asymmetry makes sense though — lots of manual extensions define CSRs or address translation modes rather than actual opcodes, so they don't show up in `instr_dict.json`.
 
-**Tier 3 (Bonus) — Sharing graph**
+**Tier 3 (Bonus) Sharing graph**
 
 Builds a graph where extensions are connected if they share at least one instruction. Outputs both a text adjacency list and DOT format you can paste into [Graphviz Online](https://dreampuf.github.io/GraphvizOnline) to visualize.
 
